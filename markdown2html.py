@@ -23,9 +23,18 @@ else:
             if c == '#':
                 h += 1
         headers.append(h)
+    L = []
     for i in range(0, len(lines)):
-        with open(argv[2], 'a') as html_file:
-            html_file.write('<h{}>{}<h{}>'.format(headers[i],
-                                                  lines[i][headers[i]+1:],
-                                                  headers[i]))
+        if i == len(lines) - 1:
+            L.append('<h{}>{}<h{}>'.format(headers[i],
+                                           lines[i][headers[i]+1:],
+                                           headers[i]))
+        else:
+            L.append('<h{}>{}<h{}>'.format(headers[i],
+                                           lines[i][headers[i]+1:-1],
+                                           headers[i]))
+
+    with open(argv[2], 'a') as html_file:
+            html_file.writelines('\n'.join(L))
+            
     exit(0)
