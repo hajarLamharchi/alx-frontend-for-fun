@@ -24,17 +24,26 @@ else:
                 h += 1
         headers.append(h)
     L = []
+    l1 = []
     for i in range(0, len(lines)):
-        if i == len(lines) - 1:
-            L.append('<h{}>{}<h{}>'.format(headers[i],
-                                           lines[i][headers[i]+1:],
-                                           headers[i]))
-        else:
-            L.append('<h{}>{}<h{}>'.format(headers[i],
-                                           lines[i][headers[i]+1:-1],
-                                           headers[i]))
-
+        if lines[i][0] == '#':
+            if i == len(lines) - 1:
+                L.append('<h{}>{}<h{}>'.format(headers[i],
+                                               lines[i][headers[i]+1:],
+                                               headers[i]))
+            else:
+                L.append('<h{}>{}<h{}>'.format(headers[i],
+                                               lines[i][headers[i]+1:-1],
+                                               headers[i]))
+        if lines[i][0] == '-':
+            if i == len(lines) - 1:
+                l1.append('<li>{}</li>'.format(lines[i][2:]))
+            else:
+                l1.append('<li>{}</li>'.format(lines[i][2:-1]))
+    L.append('<ul>')
+    for i in l1:
+        L.append(i)
+    L.append('</ul>')
     with open(argv[2], 'a') as html_file:
-            html_file.writelines('\n'.join(L))
-            
+        html_file.writelines('\n'.join(L))
     exit(0)
