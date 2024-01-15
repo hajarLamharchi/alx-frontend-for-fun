@@ -58,6 +58,6 @@ else:
             L.append('\t'+i)
         L.append('</ol>')
     print(L)
-    with open(argv[2], 'a') as html_file:
+    with open(argv[2], 'w') as html_file:
         html_file.writelines('\n'.join(L))
     exit(0)
