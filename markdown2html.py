@@ -49,13 +49,13 @@ else:
     if l1 != []:
         L.append('<ul>')
         for i in l1:
-            L.append(i)
+            L.append('\t'+i)
         L.append('</ul>')
 
     elif l2 != []:
         L.append('<ol>')
         for i in l2:
-            L.append(i)
+            L.append('\t'+i)
         L.append('</ol>')
     print(L)
     with open(argv[2], 'a') as html_file:
