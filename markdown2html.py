@@ -7,57 +7,69 @@ from sys import argv, stderr
 import os
 
 
-if (len(argv) < 2):
-    print ('Usage: ./markdown2html.py README.md README.html', file=stderr)
-    exit(1)
-elif (not os.path.exists(argv[1])):
-    print ('Missing {}'.format(argv[1]), file=stderr)
-    exit(1)
-else:
-    headers = []
-    with open(argv[1], 'r') as md_file:
-        lines = md_file.readlines()
-    for line in lines:
-        h = 0
-        for c in line:
-            if c == '#':
-                h += 1
-        headers.append(h)
-    L = []
-    l1 = []
-    l2 = []
-    for i in range(0, len(lines)):
-        if lines[i][0] == '#':
-            if i == len(lines) - 1:
-                L.append('<h{}>{}<h{}>'.format(headers[i],
-                                               lines[i][headers[i]+1:],
-                                               headers[i]))
+if __name__ == "__main__":
+    if (len(argv) < 2):
+        print ('Usage: ./markdown2html.py README.md README.html', file=stderr)
+        exit(1)
+    elif (not os.path.exists(argv[1])):
+        print ('Missing {}'.format(argv[1]), file=stderr)
+        exit(1)
+    else:
+        headers = []
+        with open(argv[1], 'r') as md_file:
+            lines = md_file.readlines()
+        for line in lines:
+            h = line.count('#')
+            headers.append(h)
+        L = []
+        unordered_list = []
+        ordered_list = []
+        paragraphs = []
+        for i in range(0, len(lines)):
+            if lines[i].startswith('#'):
+                if i == len(lines) - 1:
+                    L.append('<h{}>{}<h{}>'.format(headers[i],
+                                                   lines[i][headers[i]+1:],
+                                                   headers[i]))
+                else:
+                    L.append('<h{}>{}<h{}>'.format(headers[i],
+                                                   lines[i][headers[i]+1:-1],
+                                                   headers[i]))
+            elif lines[i].startswith('- '):
+                if i == len(lines) - 1:
+                    unordered_list.append('<li>{}</li>'.format(lines[i][2:]))
+                else:
+                    unordered_list.append('<li>{}</li>'.format(lines[i][2:-1]))
+            elif lines[i].startswith('* '):
+                if i == len(lines) - 1:
+                    ordered_list.append('<li>{}</li>'.format(lines[i][2:]))
+                else:
+                    ordered_list.append('<li>{}</li>'.format(lines[i][2:-1]))
             else:
-                L.append('<h{}>{}<h{}>'.format(headers[i],
-                                               lines[i][headers[i]+1:-1],
-                                               headers[i]))
-        elif lines[i][0] == '-':
-            if i == len(lines) - 1:
-                l1.append('<li>{}</li>'.format(lines[i][2:]))
-            else:
-                l1.append('<li>{}</li>'.format(lines[i][2:-1]))
-        elif lines[i][0] == '*':
-            if i == len(lines) - 1:
-                l2.append('<li>{}</li>'.format(lines[i][2:]))
-            else:
-                l2.append('<li>{}</li>'.format(lines[i][2:-1]))
-    if l1 != []:
-        L.append('<ul>')
-        for i in l1:
-            L.append('\t'+i)
-        L.append('</ul>')
+                paragraphs.append(lines[i])
+                s = "".join(paragraphs)
+                p = s.split('\n\n')
+                for i in p:
+                    i.strip()
+        print(p)
+        if unordered_list != []:
+            L.append('<ul>')
+            for i in unordered_list:
+                L.append('\t'+i)
+            L.append('</ul>')
 
-    elif l2 != []:
-        L.append('<ol>')
-        for i in l2:
-            L.append('\t'+i)
-        L.append('</ol>')
-    print(L)
-    with open(argv[2], 'w') as html_file:
-        html_file.writelines('\n'.join(L))
-    exit(0)
+        if ordered_list != []:
+            L.append('<ol>')
+            for i in ordered_list:
+                L.append('\t'+i)
+            L.append('</ol>')
+        if p != []:
+            for item in p:
+                if '\n' in item.strip():
+                    item = item.replace('\n', '<br />')
+                L.append('<p>')
+                L.append('\t'+item.strip())
+                L.append('</p>')
+        with open(argv[2], 'w') as html_file:
+            html_file.writelines('\n'.join(L))
+        exit(0)
