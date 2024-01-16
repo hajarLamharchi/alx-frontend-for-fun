@@ -27,12 +27,12 @@ if __name__ == "__main__":
                 level = lines[i].count('#')
                 if i == len(lines) - 1:
                     L.append('<h{}>{}</h{}>'.format(level,
-                                                   lines[i][level+1:],
-                                                   level))
+                                                    lines[i][level+1:],
+                                                    level))
                 else:
                     L.append('<h{}>{}</h{}>'.format(level,
-                                                   lines[i][level+1:-1],
-                                                   level))
+                                                    lines[i][level+1:-1],
+                                                    level))
             elif lines[i].startswith('- '):
                 if i == len(lines) - 1:
                     unordered_list.append('<li>{}</li>'.format(lines[i][2:]))
