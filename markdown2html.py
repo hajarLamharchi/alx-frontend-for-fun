@@ -8,7 +8,7 @@ import os
 
 
 if __name__ == "__main__":
-    if (len(argv) < 2):
+    if (len(argv) <= 2):
         print ('Usage: ./markdown2html.py README.md README.html', file=stderr)
         exit(1)
     elif (not os.path.exists(argv[1])):
