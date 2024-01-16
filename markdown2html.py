@@ -15,26 +15,24 @@ if __name__ == "__main__":
         print ('Missing {}'.format(argv[1]), file=stderr)
         exit(1)
     else:
-        headers = []
         with open(argv[1], 'r') as md_file:
             lines = md_file.readlines()
-        for line in lines:
-            h = line.count('#')
-            headers.append(h)
         L = []
         unordered_list = []
         ordered_list = []
         paragraphs = []
+        p = ""
         for i in range(0, len(lines)):
             if lines[i].startswith('#'):
+                level = lines[i].count('#')
                 if i == len(lines) - 1:
-                    L.append('<h{}>{}<h{}>'.format(headers[i],
-                                                   lines[i][headers[i]+1:],
-                                                   headers[i]))
+                    L.append('<h{}>{}<h{}>'.format(level,
+                                                   lines[i][level+1:],
+                                                   level))
                 else:
-                    L.append('<h{}>{}<h{}>'.format(headers[i],
-                                                   lines[i][headers[i]+1:-1],
-                                                   headers[i]))
+                    L.append('<h{}>{}<h{}>'.format(level,
+                                                   lines[i][level+1:-1],
+                                                   level))
             elif lines[i].startswith('- '):
                 if i == len(lines) - 1:
                     unordered_list.append('<li>{}</li>'.format(lines[i][2:]))
