@@ -31,7 +31,7 @@ if __name__ == "__main__":
                                                    level))
                 else:
                     L.append('<h{}>{}<h{}>'.format(level,
-                                                   lines[i][level+1:-1],
+                                                   lines[i][level+1:],
                                                    level))
             elif lines[i].startswith('- '):
                 if i == len(lines) - 1:
