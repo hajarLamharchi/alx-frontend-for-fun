@@ -26,7 +26,7 @@ if __name__ == "__main__":
             if lines[i].startswith('#'):
                 level = lines[i].count('#')
                 L.append('<h{}>{}<h{}>'.format(level,
-                                                   lines[i][level+1:],
+                                                   lines[i][level:],
                                                    level))
             elif lines[i].startswith('- '):
                 if i == len(lines) - 1:
