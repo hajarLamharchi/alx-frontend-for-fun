@@ -25,12 +25,7 @@ if __name__ == "__main__":
         for i in range(0, len(lines)):
             if lines[i].startswith('#'):
                 level = lines[i].count('#')
-                if i == len(lines) - 1:
-                    L.append('<h{}>{}<h{}>'.format(level,
-                                                   lines[i][level+1:],
-                                                   level))
-                else:
-                    L.append('<h{}>{}<h{}>'.format(level,
+                L.append('<h{}>{}<h{}>'.format(level,
                                                    lines[i][level+1:],
                                                    level))
             elif lines[i].startswith('- '):
