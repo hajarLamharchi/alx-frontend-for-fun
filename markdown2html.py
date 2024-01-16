@@ -49,9 +49,6 @@ if __name__ == "__main__":
                 paragraphs.append(lines[i])
                 s = "".join(paragraphs)
                 p = s.split('\n\n')
-                for i in p:
-                    i.strip()
-        print(p)
         if unordered_list != []:
             L.append('<ul>')
             for i in unordered_list:
