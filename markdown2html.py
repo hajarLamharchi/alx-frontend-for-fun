@@ -22,7 +22,7 @@ if __name__ == "__main__":
         ordered_list = []
         paragraphs = []
         p = []
-        for i in range(0, len(lines)):
+        for i in range(len(lines)):
             if lines[i].startswith('#'):
                 level = lines[i].count('#')
                 if i == len(lines) - 1:
