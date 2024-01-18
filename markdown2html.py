@@ -25,16 +25,15 @@ if __name__ == "__main__":
                 L.append('<h{}>{}</h{}>'.format(level,
                                                 line[level+1:],
                                                 level))
+        for line in lines:
             if line.startswith('- '):
-                unordered_list.append('<li>{}</li>'.format(line[2:]))
+                unordered_list.append('<li>{}</li>'.format(line[2:-1]))
         if unordered_list != []:
             L.append('<ul>')
             for elm in unordered_list:
                 L.append('\t'+elm)
             L.append('</ul>')
-
-        """L = []
-        
+        """
         ordered_list = []
         paragraphs = []
         p = []
