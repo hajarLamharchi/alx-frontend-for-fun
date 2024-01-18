@@ -9,7 +9,6 @@
 
 - good
 - morning
-
 Hello
 
 I'm a text

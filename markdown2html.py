@@ -20,6 +20,8 @@ if __name__ == "__main__":
         L = []
         unordered_list = []
         ordered_list = []
+        paragraphs = []
+        p = []
         for line in lines:
             if line.startswith('#'):
                 level = line.count('#')
@@ -30,7 +32,11 @@ if __name__ == "__main__":
                 unordered_list.append('<li>{}</li>'.format(line[2:-1]))
             elif line.startswith('* '):
                 ordered_list.append('<li>{}</li>'.format(line[2:-1]))
-                
+            else:
+                paragraphs.append(line)
+                s = "".join(paragraphs)
+                p = s.split('\n\n')
+
         if unordered_list != []:
             L.append('<ul>')
             for elm in unordered_list:
@@ -43,38 +49,14 @@ if __name__ == "__main__":
                 L.append('\t'+elm)
             L.append('</ol>')
 
-
-        """
-        ordered_list = []
-        paragraphs = []
-        p = []
-        for i in range(len(lines)):
-            elif lines[i].startswith('- '):
-                if i == len(lines) - 1:
-                    unordered_list.append('<li>{}</li>'.format(lines[i][2:]))
-                else:
-                    unordered_list.append('<li>{}</li>'.format(lines[i][2:-1]))
-                
-            elif lines[i].startswith('* '):
-                if i == len(lines) - 1:
-                    ordered_list.append('<li>{}</li>'.format(lines[i][2:]))
-                else:
-                    ordered_list.append('<li>{}</li>'.format(lines[i][2:-1]))
-                L.append('<ol>')
-                for elm in ordered_list:
-                    L.append('\t'+elm)
-                L.append('</ol>')
-            elif not lines[i].startswith(('\t', '\n')):
-                paragraphs.append(lines[i])
-                s = "".join(paragraphs)
-                p = s.split('\n\n')
-                for item in p:
+        if p != []:
+            for item in p:
+                if item != '':
                     if '\n' in item.strip():
                         item = item.replace('\n', '<br />')
                     L.append('<p>')
                     L.append('\t'+item.strip())
-                    L.append('</p>')    
-        print(L)"""
+                    L.append('</p>')
         with open(argv[2], 'w') as html_file:
             html_file.writelines('\n'.join(L))
         exit(0)
