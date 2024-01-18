@@ -19,20 +19,31 @@ if __name__ == "__main__":
             lines = md_file.readlines()
         L = []
         unordered_list = []
+        ordered_list = []
         for line in lines:
             if line.startswith('#'):
                 level = line.count('#')
                 L.append('<h{}>{}</h{}>'.format(level,
                                                 line[level+1:],
                                                 level))
-        for line in lines:
-            if line.startswith('- '):
+            elif line.startswith('- '):
                 unordered_list.append('<li>{}</li>'.format(line[2:-1]))
+            elif line.startswith('* '):
+                ordered_list.append('<li>{}</li>'.format(line[2:-1]))
+                
         if unordered_list != []:
             L.append('<ul>')
             for elm in unordered_list:
                 L.append('\t'+elm)
             L.append('</ul>')
+
+        if ordered_list != []:
+            L.append('<ol>')
+            for elm in ordered_list:
+                L.append('\t'+elm)
+            L.append('</ol>')
+
+
         """
         ordered_list = []
         paragraphs = []
