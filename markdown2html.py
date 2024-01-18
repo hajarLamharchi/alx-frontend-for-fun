@@ -18,38 +18,33 @@ if __name__ == "__main__":
         with open(argv[1], 'r') as md_file:
             lines = md_file.readlines()
         L = []
+        unordered_list = []
         for line in lines:
             if line.startswith('#'):
                 level = line.count('#')
                 L.append('<h{}>{}</h{}>'.format(level,
                                                 line[level+1:],
                                                 level))
+            if line.startswith('- '):
+                unordered_list.append('<li>{}</li>'.format(line[2:]))
+        if unordered_list != []:
+            L.append('<ul>')
+            for elm in unordered_list:
+                L.append('\t'+elm)
+            L.append('</ul>')
 
         """L = []
-        unordered_list = []
+        
         ordered_list = []
         paragraphs = []
         p = []
         for i in range(len(lines)):
-            if lines[i].startswith('#'):
-                level = lines[i].count('#')
-                if i == len(lines) - 1:
-                    L.append('<h{}>{}</h{}>'.format(level,
-                                                    lines[i][level+1:],
-                                                    level))
-                else:
-                    L.append('<h{}>{}</h{}>'.format(level,
-                                                    lines[i][level+1:-1],
-                                                    level))
             elif lines[i].startswith('- '):
                 if i == len(lines) - 1:
                     unordered_list.append('<li>{}</li>'.format(lines[i][2:]))
                 else:
                     unordered_list.append('<li>{}</li>'.format(lines[i][2:-1]))
-                L.append('<ul>')
-                for elm in unordered_list:
-                    L.append('\t'+elm)
-                L.append('</ul>')
+                
             elif lines[i].startswith('* '):
                 if i == len(lines) - 1:
                     ordered_list.append('<li>{}</li>'.format(lines[i][2:]))
