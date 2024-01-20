@@ -57,6 +57,16 @@ if __name__ == "__main__":
                     L.append('<p>')
                     L.append('\t'+item.strip())
                     L.append('</p>')
+
+        for i, item in enumerate(L):
+            if "**" in item:
+                b = item.split("**")
+                L[i] = item.replace("**{}**".format(b[1]),
+                                    "<b>{}</b>".format(b[1]))
+            if "__" in item:
+                b = item.split("__")
+                L[i] = item.replace("__{}__".format(b[1]),
+                                    "<em>{}</em>".format(b[1]))
         with open(argv[2], 'w') as html_file:
             html_file.writelines('\n'.join(L))
         exit(0)
