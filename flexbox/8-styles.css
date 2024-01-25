@@ -361,7 +361,7 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    min-width: 50vh;
+    min-height: 50vh;
   }
 
   /* Section Latest news ============================= */
